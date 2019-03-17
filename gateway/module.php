@@ -109,7 +109,7 @@ class NextionGateway extends IPSModule {
 	public function MessageSink($timestamp, $senderID, $messageID, $data){
 		$log = new Logging($this->ReadPropertyBoolean("log"), IPS_Getname($this->InstanceID));
 		
-		$log->LogMessage("Received ".(string)$messageID." from ".(string)$senderId);
+		$log->LogMessage("Received ".(string)$messageID." from ".(string)$senderID);
 		
         if ($messageID == 10603) {
             $currentVariableUpdatesString = $this->GetBuffer('VariableUpdates');
