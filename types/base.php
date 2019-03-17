@@ -67,8 +67,7 @@ trait HelperDeviceTypeQuery
         foreach (self::$implementedTraits as $trait) {
 			IPS_LogMessage('HelperDeviceType','Inside HelperDeviceType::doQuery');
 			IPS_LogMessage('HelperDeviceType','Calling '.'DeviceTrait' . $trait . '::doQuery');
-			call_user_func('Test');
-			//$result = call_user_func('DeviceTrait' . $trait . '::doQuery', $configuration);
+			$result = call_user_func('DeviceTrait' . $trait . '::doQuery', $configuration);
 			IPS_LogMessage('HelperDeviceType','DeviceTrait' . $trait . '::doQuery returned: ' . $result);
             $query = array_merge($query, $result);
         }
