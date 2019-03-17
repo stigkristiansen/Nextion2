@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-class DeviceTrait2OnOff
+class DeviceTraitOnOff
 {
     const propertyPrefix = 'OnOff';
     use HelperSwitchDevice;
