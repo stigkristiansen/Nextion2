@@ -155,7 +155,7 @@ class NextionGateway extends IPSModule {
 			$message .= $arr[$i];
 		}
 		
-		if(strlen($message+3)<strlen($data))
+		if(strlen($message)+3<strlen($data))
 				$buffer = substr($data, $i+3);
 			else
 				$buffer = "";
