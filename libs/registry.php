@@ -115,8 +115,8 @@ class DeviceTypeRegistry{
                 }
             }
         }
-		} catch {
-			IPS_LogMessage('ReportState', 'Exeption occured!');
+		} catch (Exception $e){
+			IPS_LogMessage('ReportState', 'Exeption occured! '.$e->getMessage());
 		}
 
 		IPS_logMessage("ReportState","States: ".json_encode($states));
