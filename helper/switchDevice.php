@@ -2,8 +2,7 @@
 declare(strict_types=1);
 
 trait HelperSwitchDevice {
-    private static function getSwitchCompatibility($variableID)
-    {
+    private static function getSwitchCompatibility($variableID, $mapping){
         if (!IPS_VariableExists($variableID)) {
             return 'Missing';
         }
@@ -19,10 +18,14 @@ trait HelperSwitchDevice {
         if (!($profileAction > 10000)) {
             return 'Action required';
         }
-        return 'OK';
+		
+		if(strlen($mapping)==0) {
+			return 'Mapping required'
+		}
+        
+		return 'OK';
     }
-    private static function getSwitchValue($variableID)
-    {
+    private static function getSwitchValue($variableID){
         $targetVariable = IPS_GetVariable($variableID);
         if ($targetVariable['VariableCustomProfile'] != '') {
             $profileName = $targetVariable['VariableCustomProfile'];
@@ -37,8 +40,8 @@ trait HelperSwitchDevice {
 		
         return $value;
     }
-    private static function switchDevice($variableID, $value)
-    {
+	
+    private static function switchDevice($variableID, $value){
 		IPS_LogMessage("switchDevice","Switching device to ".(string)$value);
 		
         if (!IPS_VariableExists($variableID)) {

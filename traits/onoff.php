@@ -21,7 +21,7 @@ class DeviceTraitOnOff
     }
     public static function getStatus($configuration)
     {
-        return self::getSwitchCompatibility($configuration[self::propertyPrefix . 'ID']);
+        return self::getSwitchCompatibility($configuration[self::propertyPrefix . 'ID'], $configuration['Mapping']);
     }
     public static function getStatusPrefix()
     {
