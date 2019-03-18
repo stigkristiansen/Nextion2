@@ -8,9 +8,7 @@ trait HelperTextDevice {
             return 'Missing';
         }
         $targetVariable = IPS_GetVariable($variableID);
-        //if ($targetVariable['VariableType'] != 0 /* Boolean */) {
-        //    return 'Bool required';
-        //}
+
         if ($targetVariable['VariableCustomAction'] != 0) {
             $profileAction = $targetVariable['VariableCustomAction'];
         } else {
