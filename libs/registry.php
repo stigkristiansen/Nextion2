@@ -151,44 +151,46 @@ class DeviceTypeRegistry{
 		$variableUpdates = [];
 		foreach($requests as $request){
 			$validRequest = false;
-			foreach (self::$supportedDeviceTypes as $deviceType) {
-				IPS_LogMessage('ProcessRequest','Searching through all configuration');
-				IPS_LogMessage('ProcessRequest','The mapping to search for is: '.$request['mapping']);
-				$configurations = json_decode(IPS_GetProperty($this->instanceID, self::propertyPrefix . $deviceType), true);
-				foreach ($configurations as $configuration) {
-					IPS_LogMessage('ProcessRequest','Got the configuration: '.json_encode($configuration));
-					$mapping = call_user_func(self::classPrefix . $deviceType . '::getMappings', $configuration);
-					IPS_LogMessage('ProcessRequest','Comparing to: '.$mapping[0]);
-					if(strtoupper($mapping[0])==strtoupper($request['mapping'])) {
-						IPS_LogMessage('ProcessRequest','Found device');
-						$validRequest = true;
-						switch(strtoupper($request['command'])){
-							case 'GETVALUE':
-								IPS_LogMessage('ProcessRequest','Processing a GetValue');
-								IPS_LogMessage('ProcessRequest','Calling '.self::classPrefix . $deviceType . '::doQuery');
-								$queryResult = call_user_func(self::classPrefix . $deviceType . '::doQuery', $configuration);
-								IPS_LogMessage('ProcessRequest','doQuery returned: '. json_encode($queryResult));
-								if (!isset($queryResult['status']) || ($queryResult['status'] != 'ERROR')) {
-									($this->sendCommand)($queryResult['command']);
-								} else
-									throw new Exception('Invalid device!');
-								break;
-							case 'SETVALUE':
-								IPS_LogMessage('ProcessRequest','Processing a SetValue');
-								$queryResult = call_user_func(self::classPrefix . $deviceType . '::doExecute', $configuration, $request['value']);
-								break;
-							default:
-								throw new Exception('Unsupported command received from Nextion');
+			if(isset($request['mapping'])) {
+				foreach (self::$supportedDeviceTypes as $deviceType) {
+					IPS_LogMessage('ProcessRequest','Searching through all configuration');
+					IPS_LogMessage('ProcessRequest','The mapping to search for is: '.$request['mapping']);
+					$configurations = json_decode(IPS_GetProperty($this->instanceID, self::propertyPrefix . $deviceType), true);
+					foreach ($configurations as $configuration) {
+						IPS_LogMessage('ProcessRequest','Got the configuration: '.json_encode($configuration));
+						$mapping = call_user_func(self::classPrefix . $deviceType . '::getMappings', $configuration);
+						IPS_LogMessage('ProcessRequest','Comparing to: '.$mapping[0]);
+						if(strtoupper($mapping[0])==strtoupper($request['mapping'])) {
+							IPS_LogMessage('ProcessRequest','Found device');
+							$validRequest = true;
+							switch(strtoupper($request['command'])){
+								case 'GETVALUE':
+									IPS_LogMessage('ProcessRequest','Processing a GetValue');
+									IPS_LogMessage('ProcessRequest','Calling '.self::classPrefix . $deviceType . '::doQuery');
+									$queryResult = call_user_func(self::classPrefix . $deviceType . '::doQuery', $configuration);
+									IPS_LogMessage('ProcessRequest','doQuery returned: '. json_encode($queryResult));
+									if (!isset($queryResult['status']) || ($queryResult['status'] != 'ERROR')) {
+										($this->sendCommand)($queryResult['command']);
+									} else
+										throw new Exception('Invalid device!');
+									break;
+								case 'SETVALUE':
+									IPS_LogMessage('ProcessRequest','Processing a SetValue');
+									$queryResult = call_user_func(self::classPrefix . $deviceType . '::doExecute', $configuration, $request['value']);
+									break;
+								default:
+									throw new Exception('Unsupported command received from Nextion');
+							}
+							
+							break;
+							
 						}
-						
-						break;
-						
 					}
 				}
 			}
 			
 			if(!$validRequest)
-				throw new Exception('Invalid request received from Nextion');
+				IPS_LogMessage('ProcessRequest', "Invalid request received from Nextion!");
 			
 		}
 		
