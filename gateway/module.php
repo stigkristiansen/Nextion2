@@ -164,9 +164,8 @@ class NextionGateway extends IPSModule {
 			$log->LogMessage("Found message: ".$message);
 
 			$this->SetBuffer("SerialBuffer", $buffer);
-			$log->LogMessage(strlen($buffer>0)?"New buffer is ".$buffer:"Buffer is reset");
-			$this->Unlock("SerialBuffer");
-			
+			$log->LogMessage(strlen($buffer>0)?"New buffer is ".$buffer."Buffer is reset");
+						
 			$log->LogMessage("Analyzing the incoming message...");
 			if(strlen($message)>1) { //length of 1 indicates a return code 
 				$currentRequestsString = $this->GetBuffer('Requests');
@@ -198,6 +197,8 @@ class NextionGateway extends IPSModule {
 			$this->SetBuffer("SerialBuffer", $data);
 			$log->LogMessage("Buffer is saved");
 		}
+		
+		$this->Unlock("SerialBuffer");
     }
 	
 	public function SendCommand(string $Command) {
