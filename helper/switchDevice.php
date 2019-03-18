@@ -20,7 +20,7 @@ trait HelperSwitchDevice {
         }
 		
 		if(strlen($mapping)==0) {
-			return 'Mapping required'
+			return 'Mapping required';
 		}
         
 		return 'OK';
