@@ -33,7 +33,7 @@ class DeviceTraitNumber
         if (IPS_VariableExists($configuration[self::propertyPrefix . 'ID'])) {
 			$command = $configuration['Mapping'];
 			$value = self::getNumberValue($configuration[self::propertyPrefix . 'ID']);
-			$command.=".txt=\"".$value."\"";
+			$command.=".val=\"".$value."\"";
             return [
 				'command' => $command
             ];
