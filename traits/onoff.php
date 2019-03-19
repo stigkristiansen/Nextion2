@@ -28,8 +28,7 @@ class DeviceTraitOnOff
         return 'Switch: ';
     }
     public static function doQuery($configuration){
-		IPS_LogMessage('HelperSwitchDevice','Inside DeviceTraitOnOff::doQuery');
-        if (IPS_VariableExists($configuration[self::propertyPrefix . 'ID'])) {
+		if (IPS_VariableExists($configuration[self::propertyPrefix . 'ID'])) {
 			$command = $configuration['Mapping'];
 			$value = self::getSwitchValue($configuration[self::propertyPrefix . 'ID']);
 			$command.=".val=".($value?"1":"0");

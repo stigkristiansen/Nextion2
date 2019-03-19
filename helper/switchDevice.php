@@ -42,9 +42,7 @@ trait HelperSwitchDevice {
     }
 	
     private static function switchDevice($variableID, $value){
-		IPS_LogMessage("switchDevice","Switching device to ".(string)$value);
-		
-        if (!IPS_VariableExists($variableID)) {
+		if (!IPS_VariableExists($variableID)) {
             return false;
         }
         $targetVariable = IPS_GetVariable($variableID);
