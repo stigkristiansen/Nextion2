@@ -2,8 +2,7 @@
 declare(strict_types=1);
 
 trait HelperNumberDevice {
-    private static function getNumberCompatibility($variableID, $mapping)
-    {
+    private static function getNumberCompatibility($variableID, $mapping){
         if (!IPS_VariableExists($variableID)) {
             return 'Missing';
         }
@@ -28,9 +27,7 @@ trait HelperNumberDevice {
     }
 	
     private static function changeNumber($variableID, $value){
-		IPS_LogMessage("HelperNumberDevice","Changing number to ".(string)$value);
-		
-        if (!IPS_VariableExists($variableID)) {
+		if (!IPS_VariableExists($variableID)) {
             return false;
         }
         $targetVariable = IPS_GetVariable($variableID);
@@ -47,9 +44,6 @@ trait HelperNumberDevice {
         if ($profileAction < 10000) {
             return false;
         }
-        
-		IPS_LogMessage("HelperNumberDevice","Changing number to ".(string)$value);
-		
         
         if (IPS_InstanceExists($profileAction)) {
             IPS_RunScriptText('IPS_RequestAction(' . var_export($profileAction, true) . ', ' . var_export(IPS_GetObject($variableID)['ObjectIdent'], true) . ', ' . var_export($value, true) . ');');

@@ -20,6 +20,7 @@ class DeviceTypeRegistry{
     private $sendDebug = null;
     private $instanceID = 0;
 	private $sendCommand = null;
+	private $logMessage = null;
     
 	public function __construct(int $instanceID, callable $registerProperty, callable $sendDebug, callable $sendCommand) {
         $this->sendDebug = $sendDebug;
@@ -94,33 +95,21 @@ class DeviceTypeRegistry{
     }
 	
 	 public function ReportState($variableUpdates){
-		IPS_LogMessage('ReportState: ',"Inside Registry::ReportState"); 
-		IPS_LogMessage('ReportState: ',"Variable(s) to update is/are: ". json_encode($variableUpdates));  
         $states = [];
-		try {
-        foreach (self::$supportedDeviceTypes as $deviceType) {
-            $configurations = json_decode(IPS_GetProperty($this->instanceID, self::propertyPrefix . $deviceType), true);
-            foreach ($configurations as $configuration) {
-                $variableIDs = call_user_func(self::classPrefix . $deviceType . '::getObjectIDs', $configuration);
-				IPS_LogMessage("ReportState","Trying to match: ".json_encode($variableIDs));
-                if (count(array_intersect($variableUpdates, $variableIDs)) > 0) {
-					IPS_LogMessage("ReportState","It was a match");
-					IPS_LogMessage('ReportState','Calling '.self::classPrefix . $deviceType . '::doQuery');
-                    $queryResult = call_user_func(self::classPrefix . $deviceType . '::doQuery', $configuration);
-					IPS_LogMessage("ReportState","::doQuery returned: ".json_encode($queryResult));
-                    if (!isset($queryResult['status']) || ($queryResult['status'] != 'ERROR')) {
-						IPS_LogMessage("ReportState","Getting command to send...");
-                        $states[$configuration['ID']] = call_user_func(self::classPrefix . $deviceType . '::doQuery', $configuration);
-                    }
-                }
-            }
-        }
-		} catch (Exception $e){
-			IPS_LogMessage('ReportState', 'Exeption occured! '.$e->getMessage());
-		}
-
-		IPS_logMessage("ReportState","States: ".json_encode($states));
 		
+		foreach (self::$supportedDeviceTypes as $deviceType) {
+			$configurations = json_decode(IPS_GetProperty($this->instanceID, self::propertyPrefix . $deviceType), true);
+			foreach ($configurations as $configuration) {
+				$variableIDs = call_user_func(self::classPrefix . $deviceType . '::getObjectIDs', $configuration);
+				if (count(array_intersect($variableUpdates, $variableIDs)) > 0) {
+					$queryResult = call_user_func(self::classPrefix . $deviceType . '::doQuery', $configuration);
+					if (!isset($queryResult['status']) || ($queryResult['status'] != 'ERROR')) {
+						$states[$configuration['ID']] = call_user_func(self::classPrefix . $deviceType . '::doQuery', $configuration);
+					}
+				}
+			}
+		}
+	
 		foreach($states as $state) {
 			($this->sendCommand)($state['command']);
 		}
@@ -146,18 +135,13 @@ class DeviceTypeRegistry{
     }
 	 
 	public function ProcessRequest($requests) {
-		IPS_LogMessage('ProcessRequest', "Inside Registry::ProcessRequest"); 
-		IPS_LogMessage('ProcessRequest', 'Requests: '.json_encode($requests));
 		$variableUpdates = [];
 		foreach($requests as $request){
 			$validRequest = false;
 			if(isset($request['mapping'])) {
 				foreach (self::$supportedDeviceTypes as $deviceType) {
-					IPS_LogMessage('ProcessRequest','Searching through all configuration');
-					IPS_LogMessage('ProcessRequest','The mapping to search for is: '.$request['mapping']);
 					$configurations = json_decode(IPS_GetProperty($this->instanceID, self::propertyPrefix . $deviceType), true);
 					foreach ($configurations as $configuration) {
-						IPS_LogMessage('ProcessRequest','Got the configuration: '.json_encode($configuration));
 						$mapping = call_user_func(self::classPrefix . $deviceType . '::getMappings', $configuration);
 						IPS_LogMessage('ProcessRequest','Comparing to: '.$mapping[0]);
 						if(strtoupper($mapping[0])==strtoupper($request['mapping'])) {
@@ -165,8 +149,6 @@ class DeviceTypeRegistry{
 							$validRequest = true;
 							switch(strtoupper($request['command'])){
 								case 'GETVALUE':
-									IPS_LogMessage('ProcessRequest','Processing a GetValue');
-									IPS_LogMessage('ProcessRequest','Calling '.self::classPrefix . $deviceType . '::doQuery');
 									$queryResult = call_user_func(self::classPrefix . $deviceType . '::doQuery', $configuration);
 									IPS_LogMessage('ProcessRequest','doQuery returned: '. json_encode($queryResult));
 									if (!isset($queryResult['status']) || ($queryResult['status'] != 'ERROR')) {
@@ -189,13 +171,7 @@ class DeviceTypeRegistry{
 					}
 				}
 			}
-			
-			if(!$validRequest)
-				IPS_LogMessage('ProcessRequest', "Invalid request received from Nextion!");
-			
 		}
-		
-		
 	}
 	
 	public function getConfigurationForm(): array {

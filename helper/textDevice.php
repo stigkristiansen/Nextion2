@@ -28,9 +28,7 @@ trait HelperTextDevice {
     }
 	
     private static function changeText($variableID, $value){
-		IPS_LogMessage("ChangeDevice","Changing text to ".(string)$value);
-		
-        if (!IPS_VariableExists($variableID)) {
+	    if (!IPS_VariableExists($variableID)) {
             return false;
         }
         $targetVariable = IPS_GetVariable($variableID);
@@ -47,9 +45,6 @@ trait HelperTextDevice {
         if ($profileAction < 10000) {
             return false;
         }
-        
-		IPS_LogMessage("ChangeDevice","Changing text to ".(string)$value);
-		
         
         if (IPS_InstanceExists($profileAction)) {
             IPS_RunScriptText('IPS_RequestAction(' . var_export($profileAction, true) . ', ' . var_export(IPS_GetObject($variableID)['ObjectIdent'], true) . ', ' . var_export($value, true) . ');');
