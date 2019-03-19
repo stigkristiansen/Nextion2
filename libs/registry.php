@@ -176,6 +176,7 @@ class DeviceTypeRegistry{
 									break;
 								case 'SETVALUE':
 									IPS_LogMessage('ProcessRequest','Processing a SetValue');
+									
 									$queryResult = call_user_func(self::classPrefix . $deviceType . '::doExecute', $configuration, $request['value']);
 									break;
 								default:
