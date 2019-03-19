@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 trait HelperDeviceTypeColumns
 {
-    public static function getColumns()
-    {
+    public static function getColumns() {
         $columns = [];
         foreach (self::$implementedTraits as $trait) {
             $columns = array_merge($columns, call_user_func('DeviceTrait' . $trait . '::getColumns'));
@@ -12,10 +11,8 @@ trait HelperDeviceTypeColumns
         return $columns;
     }
 }
-trait HelperDeviceTypeStatus
-{
-    public static function getStatus($configuration)
-    {
+trait HelperDeviceTypeStatus {
+    public static function getStatus($configuration){
         if ($configuration['Name'] == '') {
             return 'No name';
         }
@@ -32,8 +29,7 @@ trait HelperDeviceTypeStatus
         return 'OK';
     }
 }
-trait HelperDeviceTypeSync
-{
+trait HelperDeviceTypeSync {
     public static function doSync($configuration)
     {
         $sync = [
@@ -60,23 +56,18 @@ trait HelperDeviceTypeSync
         return $sync;
     }
 }
-trait HelperDeviceTypeQuery
-{
+trait HelperDeviceTypeQuery {
     public static function doQuery($configuration){
         $query = [];
         foreach (self::$implementedTraits as $trait) {
-			IPS_LogMessage('HelperDeviceType','Inside HelperDeviceType::doQuery');
-			IPS_LogMessage('HelperDeviceType','Calling '.'DeviceTrait' . $trait . '::doQuery');
 			$result = call_user_func('DeviceTrait' . $trait . '::doQuery', $configuration);
-			IPS_LogMessage('HelperDeviceType','DeviceTrait' . $trait . '::doQuery returned: ' . json_encode($result));
             $query = array_merge($query, $result);
         }
         $query['online'] = count($query) > 0;
         return $query;
     }
 }
-trait HelperDeviceTypeExecute
-{
+trait HelperDeviceTypeExecute {
     public static function doExecute($configuration, $Value)
     {
         foreach (self::$implementedTraits as $trait) {
@@ -84,8 +75,7 @@ trait HelperDeviceTypeExecute
         }
     }
 }
-trait HelperDeviceTypeGetVariables
-{
+trait HelperDeviceTypeGetVariables {
     public static function getObjectIDs($configuration)
     {
         $result = [];
@@ -95,8 +85,7 @@ trait HelperDeviceTypeGetVariables
         return $result;
     }
 }
-trait HelperDeviceTypeMappings
-{
+trait HelperDeviceTypeMappings {
     public static function getMappings($configuration)
     {
         $result = [];
@@ -106,8 +95,8 @@ trait HelperDeviceTypeMappings
         return $result;
     }
 }
-trait HelperDeviceType
-{
+
+trait HelperDeviceType {
     use HelperDeviceTypeGetVariables;
 	use HelperDeviceTypeMappings;
     use HelperDeviceTypeColumns;

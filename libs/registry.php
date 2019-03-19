@@ -137,15 +137,15 @@ class DeviceTypeRegistry{
 	public function ProcessRequest($requests) {
 		$variableUpdates = [];
 		foreach($requests as $request){
+			$foundConfiguration = false;
 			$validRequest = false;
 			if(isset($request['mapping'])) {
 				foreach (self::$supportedDeviceTypes as $deviceType) {
 					$configurations = json_decode(IPS_GetProperty($this->instanceID, self::propertyPrefix . $deviceType), true);
 					foreach ($configurations as $configuration) {
 						$mapping = call_user_func(self::classPrefix . $deviceType . '::getMappings', $configuration);
-						IPS_LogMessage('ProcessRequest','Comparing to: '.$mapping[0]);
 						if(strtoupper($mapping[0])==strtoupper($request['mapping'])) {
-							IPS_LogMessage('ProcessRequest','Found device');
+							$foundConfiguration = false;
 							$validRequest = true;
 							switch(strtoupper($request['command'])){
 								case 'GETVALUE':
@@ -168,7 +168,11 @@ class DeviceTypeRegistry{
 							break;
 							
 						}
+						if($foundConfiguration)
+							break;
 					}
+					if($foundConfiguration)
+						break;
 				}
 			}
 		}
