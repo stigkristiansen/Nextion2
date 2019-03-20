@@ -28,6 +28,7 @@ class NextionGateway extends IPSModule {
             }
         );
     }
+
     public function Create()
     {
         parent::Create();
@@ -104,7 +105,6 @@ class NextionGateway extends IPSModule {
 			$states = $this->registry->ReportState(json_decode($variableUpdates, true));
         }
     }
-
 		
 	public function MessageSink($timestamp, $senderID, $messageID, $data){
 		$log = new Logging($this->ReadPropertyBoolean("log"), IPS_Getname($this->InstanceID));
@@ -212,13 +212,10 @@ class NextionGateway extends IPSModule {
 		} else
 			$log->LogMessage("Lock \"ReturnCode\" is locked");
 
-		
 		$this->SetBuffer("ReturnCode", "ValueNotSet");
 		$log->LogMessage("ReturnCode is set to \"Not Set\"");
 		
 		$this->Unlock("ReturnCode");
-		
-		
 
 		SPRT_SendText(IPS_GetInstanceParentId($this->InstanceID), $Command.self::EndOfMessage);
 		
@@ -241,7 +238,6 @@ class NextionGateway extends IPSModule {
 					
 		$log->LogMessage("The return code was received by SendCommand");
 		return $returnCode;
-		
 	}
 	
 	public function GetConfigurationForm() {
@@ -255,9 +251,7 @@ class NextionGateway extends IPSModule {
 		];
 		
 		$deviceTypes = $this->registry->getConfigurationForm();
-        return json_encode(['elements'      => array_merge($deviceTypes, $logging)]); //,
-                            
-							//'translations'  => $this->registry->getTranslations()]);
+        return json_encode(['elements'      => array_merge($deviceTypes, $logging)]); 
     }
  
     private function Lock($ident){

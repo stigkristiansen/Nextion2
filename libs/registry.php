@@ -115,25 +115,6 @@ class DeviceTypeRegistry{
 		}
 	 }
 	 
-	 public function doExecuteDevice($deviceID, $deviceCommand, $deviceParams)
-    {
-        //Add all deviceType specific properties
-        foreach (self::$supportedDeviceTypes as $deviceType) {
-            $configurations = json_decode(IPS_GetProperty($this->instanceID, self::propertyPrefix . $deviceType), true);
-            foreach ($configurations as $configuration) {
-                if ($configuration['ID'] == $deviceID) { // Må fikses vi har variabelID 
-                    return call_user_func(self::classPrefix . $deviceType . '::doExecute', $configuration, $deviceCommand, $deviceParams, $emulateStatus);
-                }
-            }
-        }
-        //Return an device not found error
-        return [
-            'ids'       => [$deviceID],
-            'status'    => 'ERROR',
-            'errorCode' => 'deviceNotFound'
-        ];
-    }
-	 
 	public function ProcessRequest($requests) {
 		$variableUpdates = [];
 		foreach($requests as $request){

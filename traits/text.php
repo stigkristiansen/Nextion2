@@ -74,23 +74,7 @@ class DeviceTraitText
             $configuration['Mapping']
         ];
 	}
-	
-    public static function supportedTraits($configuration)
-    {
-        return [
-            'action.devices.traits.Text'
-        ];
-    }
-    public static function supportedCommands()
-    {
-        return [
-            'action.devices.commands.Text'
-        ];
-    }
-    public static function getAttributes()
-    {
-        return [];
-    }
+
 }
 
 ?>

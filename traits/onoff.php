@@ -73,23 +73,7 @@ class DeviceTraitOnOff
             $configuration['Mapping']
         ];
 	}
-	
-    public static function supportedTraits($configuration)
-    {
-        return [
-            'action.devices.traits.OnOff'
-        ];
-    }
-    public static function supportedCommands()
-    {
-        return [
-            'action.devices.commands.OnOff'
-        ];
-    }
-    public static function getAttributes()
-    {
-        return [];
-    }
+
 }
 
 ?>
