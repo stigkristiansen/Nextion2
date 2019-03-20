@@ -168,11 +168,9 @@ class DeviceTypeRegistry{
 							break;
 							
 						}
-						if($foundConfiguration)
-							break;
+						
 					}
-					if($foundConfiguration)
-						break;
+					
 				}
 			}
 		}

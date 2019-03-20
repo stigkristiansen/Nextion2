@@ -101,7 +101,7 @@ trait HelperDeviceType {
 	use HelperDeviceTypeMappings;
     use HelperDeviceTypeColumns;
     use HelperDeviceTypeStatus;
-    use HelperDeviceTypeSync;
+    //use HelperDeviceTypeSync;
     use HelperDeviceTypeQuery;
     use HelperDeviceTypeExecute;
 }
