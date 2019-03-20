@@ -29,7 +29,7 @@ class DeviceTraitText
     }
     public static function doQuery($configuration)
     {
-		if (IPS_VariableExists($configuration[self::propertyPrefix . 'ID'])) {
+		if (IPS_VariableExists($configuration[self::propertyPrefix . 'ID'])){
 			$command = $configuration['Mapping'];
 			$value = self::getTextValue($configuration[self::propertyPrefix . 'ID']);
 			$command.=".txt=\"".$value."\"";
@@ -42,7 +42,7 @@ class DeviceTraitText
     }
     public static function doExecute($configuration, $Value)
     {
-		if (self::changeText($configuration[self::propertyPrefix . 'ID'], $Value)) {
+		if (self::changeText($configuration[self::propertyPrefix . 'ID'], $Value)){
 			$text = $Value;
 			
 			return [
@@ -69,7 +69,7 @@ class DeviceTraitText
         ];
     }
 	
-	public static function getMappings($configuration) {
+	public static function getMappings($configuration){
 		return [
             $configuration['Mapping']
         ];

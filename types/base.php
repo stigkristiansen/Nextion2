@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 trait HelperDeviceTypeColumns
 {
-    public static function getColumns() {
+    public static function getColumns(){
         $columns = [];
-        foreach (self::$implementedTraits as $trait) {
+        foreach (self::$implementedTraits as $trait){
             $columns = array_merge($columns, call_user_func('DeviceTrait' . $trait . '::getColumns'));
         }
         return $columns;
@@ -13,13 +13,13 @@ trait HelperDeviceTypeColumns
 }
 trait HelperDeviceTypeStatus {
     public static function getStatus($configuration){
-        if ($configuration['Name'] == '') {
+        if ($configuration['Name'] == ''){
             return 'No name';
         }
-        foreach (self::$implementedTraits as $trait) {
+        foreach (self::$implementedTraits as $trait){
             $status = call_user_func('DeviceTrait' . $trait . '::getStatus', $configuration);
-            if ($status != 'OK') {
-                if (self::$displayStatusPrefix) {
+            if ($status != 'OK'){
+                if (self::$displayStatusPrefix){
                     return call_user_func('DeviceTrait' . $trait . '::getStatusPrefix') . $status;
                 } else {
                     return $status;
@@ -43,14 +43,14 @@ trait HelperDeviceTypeSync {
             'willReportState' => false
         ];
         $attributes = [];
-        foreach (self::$implementedTraits as $trait) {
+        foreach (self::$implementedTraits as $trait){
             $traits = call_user_func('DeviceTrait' . $trait . '::supportedTraits', $configuration);
-            if (count($traits) > 0) {
+            if (count($traits) > 0){
                 $sync['traits'] = array_merge($sync['traits'], call_user_func('DeviceTrait' . $trait . '::supportedTraits', $configuration));
                 $attributes = array_merge($attributes, call_user_func('DeviceTrait' . $trait . '::getAttributes'));
             }
         }
-        if (count($attributes) > 0) {
+        if (count($attributes) > 0){
             $sync['attributes'] = $attributes;
         }
         return $sync;
@@ -59,7 +59,7 @@ trait HelperDeviceTypeSync {
 trait HelperDeviceTypeQuery {
     public static function doQuery($configuration){
         $query = [];
-        foreach (self::$implementedTraits as $trait) {
+        foreach (self::$implementedTraits as $trait){
 			$result = call_user_func('DeviceTrait' . $trait . '::doQuery', $configuration);
             $query = array_merge($query, $result);
         }
@@ -70,7 +70,7 @@ trait HelperDeviceTypeQuery {
 trait HelperDeviceTypeExecute {
     public static function doExecute($configuration, $Value)
     {
-        foreach (self::$implementedTraits as $trait) {
+        foreach (self::$implementedTraits as $trait){
             return call_user_func('DeviceTrait' . $trait . '::doExecute', $configuration, $Value);
         }
     }
@@ -79,7 +79,7 @@ trait HelperDeviceTypeGetVariables {
     public static function getObjectIDs($configuration)
     {
         $result = [];
-        foreach (self::$implementedTraits as $trait) {
+        foreach (self::$implementedTraits as $trait){
             $result = array_unique(array_merge($result, call_user_func('DeviceTrait' . $trait . '::getObjectIDs', $configuration)));
         }
         return $result;
@@ -89,7 +89,7 @@ trait HelperDeviceTypeMappings {
     public static function getMappings($configuration)
     {
         $result = [];
-        foreach (self::$implementedTraits as $trait) {
+        foreach (self::$implementedTraits as $trait){
             $result = array_unique(array_merge($result, call_user_func('DeviceTrait' . $trait . '::getMappings', $configuration)));
         }
         return $result;

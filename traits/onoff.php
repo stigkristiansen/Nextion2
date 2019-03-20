@@ -28,7 +28,7 @@ class DeviceTraitOnOff
         return 'Switch: ';
     }
     public static function doQuery($configuration){
-		if (IPS_VariableExists($configuration[self::propertyPrefix . 'ID'])) {
+		if (IPS_VariableExists($configuration[self::propertyPrefix . 'ID'])){
 			$command = $configuration['Mapping'];
 			$value = self::getSwitchValue($configuration[self::propertyPrefix . 'ID']);
 			$command.=".val=".($value?"1":"0");
@@ -41,7 +41,7 @@ class DeviceTraitOnOff
     }
     public static function doExecute($configuration, $Value)
     {
-		if (self::switchDevice($configuration[self::propertyPrefix . 'ID'], $Value)) {
+		if (self::switchDevice($configuration[self::propertyPrefix . 'ID'], $Value)){
 			$on = boolval($Value);
 			
 			return [
@@ -68,7 +68,7 @@ class DeviceTraitOnOff
         ];
     }
 	
-	public static function getMappings($configuration) {
+	public static function getMappings($configuration){
 		return [
             $configuration['Mapping']
         ];
