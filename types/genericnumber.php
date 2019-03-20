@@ -16,7 +16,7 @@ class DeviceTypeGenericNumber {
     }
     
 	public static function getCaption(){
-        return 'Number';
+        return 'Integer';
     }
 	
 

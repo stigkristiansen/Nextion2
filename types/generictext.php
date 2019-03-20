@@ -16,7 +16,7 @@ class DeviceTypeGenericText {
     }
     
 	public static function getCaption(){
-        return 'Text';
+        return 'String';
     }
 	
 
