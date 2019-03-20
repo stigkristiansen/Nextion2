@@ -42,7 +42,7 @@ trait HelperSwitchDevice {
         return $value;
     }
 	
-    private static function switchDevice($variableID, $value){
+    private static function changeVariable($variableID, $value){
 		if (!IPS_VariableExists($variableID)){
             return false;
         }

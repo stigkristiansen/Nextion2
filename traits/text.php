@@ -41,7 +41,7 @@ class DeviceTraitText
     }
 	
     public static function doExecute($configuration, $Value){
-		if (self::changeText($configuration[self::propertyPrefix . 'ID'], $Value)){
+		if (self::changeVariable($configuration[self::propertyPrefix . 'ID'], $Value)){
 			$text = $Value;
 			
 			return [

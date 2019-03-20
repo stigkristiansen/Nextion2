@@ -41,7 +41,7 @@ class DeviceTraitOnOff
     }
 	
     public static function doExecute($configuration, $Value){
-		if (self::switchDevice($configuration[self::propertyPrefix . 'ID'], $Value)){
+		if (self::changeVariable($configuration[self::propertyPrefix . 'ID'], $Value)){
 			$on = boolval($Value);
 			
 			return [
