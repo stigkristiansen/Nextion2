@@ -16,7 +16,7 @@ class DeviceTypeGenericSwitch {
     }
     
 	public static function getCaption(){
-        return 'Dual-state button';
+        return 'Boolean';
     }
 }
 
