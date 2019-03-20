@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 trait HelperNumberDevice {
-    private static function getNumberCompatibility($variableID, $mapping){
+    private static function getCompatibility($variableID, $mapping){
         if (!IPS_VariableExists($variableID)){
             return 'Missing';
         }

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 trait HelperSwitchDevice {
-    private static function getSwitchCompatibility($variableID, $mapping){
+    private static function getCompatibility($variableID, $mapping){
         if (!IPS_VariableExists($variableID)){
             return 'Missing variable';
         }

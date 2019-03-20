@@ -20,7 +20,7 @@ class DeviceTraitText
     }
 	
     public static function getStatus($configuration){
-        return self::getTextCompatibility($configuration[self::propertyPrefix . 'ID'], $configuration['Mapping']);
+        return self::getCompatibility($configuration[self::propertyPrefix . 'ID'], $configuration['Mapping']);
     }
 	
     public static function getStatusPrefix(){

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 trait HelperTextDevice {
-    private static function getTextCompatibility($variableID, $mapping){
+    private static function getCompatibility($variableID, $mapping){
         if (!IPS_VariableExists($variableID)){
             return 'Missing';
         }
