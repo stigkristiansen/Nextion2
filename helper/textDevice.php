@@ -23,7 +23,7 @@ trait HelperTextDevice {
         return 'OK';
     }
 	
-    private static function getTextValue($variableID){
+    private static function getVariableValue($variableID){
         return GetValue($variableID);
     }
 	

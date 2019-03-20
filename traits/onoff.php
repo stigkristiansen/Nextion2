@@ -30,7 +30,7 @@ class DeviceTraitOnOff
     public static function doQuery($configuration){
 		if (IPS_VariableExists($configuration[self::propertyPrefix . 'ID'])){
 			$command = $configuration['Mapping'];
-			$value = self::getSwitchValue($configuration[self::propertyPrefix . 'ID']);
+			$value = self::getVariableValue($configuration[self::propertyPrefix . 'ID']);
 			$command.=".val=".($value?"1":"0");
             return [
 				'command' => $command

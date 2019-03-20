@@ -22,7 +22,7 @@ trait HelperNumberDevice {
 		}
         return 'OK';
     }
-    private static function getNumberValue($variableID){
+    private static function getVariableValue($variableID){
         return GetValue($variableID);
     }
 	

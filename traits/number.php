@@ -30,7 +30,7 @@ class DeviceTraitNumber
     public static function doQuery($configuration){
 		if (IPS_VariableExists($configuration[self::propertyPrefix . 'ID'])){
 			$command = $configuration['Mapping'];
-			$value = self::getNumberValue($configuration[self::propertyPrefix . 'ID']);
+			$value = self::getVariableValue($configuration[self::propertyPrefix . 'ID']);
 			$command.=".val=".(string)$value;
             return [
 				'command' => $command

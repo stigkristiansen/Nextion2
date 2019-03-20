@@ -26,7 +26,7 @@ trait HelperSwitchDevice {
 		return 'OK';
     }
 	
-    private static function getSwitchValue($variableID){
+    private static function getVariableValue($variableID){
         $targetVariable = IPS_GetVariable($variableID);
         if ($targetVariable['VariableCustomProfile'] != ''){
             $profileName = $targetVariable['VariableCustomProfile'];
