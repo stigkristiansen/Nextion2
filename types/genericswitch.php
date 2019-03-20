@@ -18,8 +18,6 @@ class DeviceTypeGenericSwitch {
 	public static function getCaption(){
         return 'Dual-state button';
     }
-	
-
 }
 
 DeviceTypeRegistry::register('GenericSwitch');

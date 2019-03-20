@@ -118,16 +118,12 @@ class DeviceTypeRegistry{
 	public function ProcessRequest($requests){
 		$variableUpdates = [];
 		foreach($requests as $request){
-			$foundConfiguration = false;
-			$validRequest = false;
 			if(isset($request['mapping'])){
 				foreach (self::$supportedDeviceTypes as $deviceType){
 					$configurations = json_decode(IPS_GetProperty($this->instanceID, self::propertyPrefix . $deviceType), true);
 					foreach ($configurations as $configuration){
 						$mapping = call_user_func(self::classPrefix . $deviceType . '::getMappings', $configuration);
 						if(strtoupper($mapping[0])==strtoupper($request['mapping'])){
-							$foundConfiguration = false;
-							$validRequest = true;
 							switch(strtoupper($request['command'])){
 								case 'GETVALUE':
 									$queryResult = call_user_func(self::classPrefix . $deviceType . '::doQuery', $configuration);
@@ -145,13 +141,9 @@ class DeviceTypeRegistry{
 								default:
 									throw new Exception('Unsupported command received from Nextion');
 							}
-							
 							break;
-							
 						}
-						
 					}
-					
 				}
 			}
 		}
@@ -229,8 +221,6 @@ class DeviceTypeRegistry{
         }
         return $form;
     }
-	
-	
 }
 	
 ?>

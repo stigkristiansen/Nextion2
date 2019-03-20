@@ -5,8 +5,7 @@ class DeviceTraitOnOff
     const propertyPrefix = 'OnOff';
     use HelperSwitchDevice;
     
-	public static function getColumns()
-    {
+	public static function getColumns(){
         return [
             [
                 'label' => 'Variable',
@@ -19,14 +18,15 @@ class DeviceTraitOnOff
             ]
         ];
     }
-    public static function getStatus($configuration)
-    {
+	
+    public static function getStatus($configuration){
         return self::getSwitchCompatibility($configuration[self::propertyPrefix . 'ID'], $configuration['Mapping']);
     }
-    public static function getStatusPrefix()
-    {
+	
+    public static function getStatusPrefix(){
         return 'Switch: ';
     }
+	
     public static function doQuery($configuration){
 		if (IPS_VariableExists($configuration[self::propertyPrefix . 'ID'])){
 			$command = $configuration['Mapping'];
@@ -39,8 +39,8 @@ class DeviceTraitOnOff
             return [];
         }
     }
-    public static function doExecute($configuration, $Value)
-    {
+	
+    public static function doExecute($configuration, $Value){
 		if (self::switchDevice($configuration[self::propertyPrefix . 'ID'], $Value)){
 			$on = boolval($Value);
 			
@@ -61,8 +61,7 @@ class DeviceTraitOnOff
 		}
     }
 
-    public static function getObjectIDs($configuration)
-    {
+    public static function getObjectIDs($configuration){
         return [
             $configuration[self::propertyPrefix . 'ID']
         ];
@@ -73,7 +72,6 @@ class DeviceTraitOnOff
             $configuration['Mapping']
         ];
 	}
-
 }
 
 ?>

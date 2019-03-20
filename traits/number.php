@@ -5,8 +5,7 @@ class DeviceTraitNumber
     const propertyPrefix = 'Number';
     use HelperNumberDevice;
     
-	public static function getColumns()
-    {
+	public static function getColumns(){
         return [
             [
                 'label' => 'Variable',
@@ -19,16 +18,16 @@ class DeviceTraitNumber
             ]
         ];
     }
-    public static function getStatus($configuration)
-    {
+	
+    public static function getStatus($configuration){
         return self::getNumberCompatibility($configuration[self::propertyPrefix . 'ID'], $configuration['Mapping']);
     }
-    public static function getStatusPrefix()
-    {
+	
+    public static function getStatusPrefix(){
         return 'Number: ';
     }
-    public static function doQuery($configuration)
-    {
+	
+    public static function doQuery($configuration){
 		if (IPS_VariableExists($configuration[self::propertyPrefix . 'ID'])){
 			$command = $configuration['Mapping'];
 			$value = self::getNumberValue($configuration[self::propertyPrefix . 'ID']);
@@ -40,8 +39,8 @@ class DeviceTraitNumber
             return [];
         }
     }
-    public static function doExecute($configuration, $Value)
-    {
+	
+    public static function doExecute($configuration, $Value){
 		if (self::changeNumber($configuration[self::propertyPrefix . 'ID'], $Value)){
 			$text = $Value;
 			
@@ -62,8 +61,7 @@ class DeviceTraitNumber
 		}
     }
 
-    public static function getObjectIDs($configuration)
-    {
+    public static function getObjectIDs($configuration){
         return [
             $configuration[self::propertyPrefix . 'ID']
         ];
@@ -74,8 +72,6 @@ class DeviceTraitNumber
             $configuration['Mapping']
         ];
 	}
-	
-
 }
 
 ?>
