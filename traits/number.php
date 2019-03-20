@@ -75,22 +75,7 @@ class DeviceTraitNumber
         ];
 	}
 	
-    public static function supportedTraits($configuration)
-    {
-        return [
-            'action.devices.traits.Number'
-        ];
-    }
-    public static function supportedCommands()
-    {
-        return [
-            'action.devices.commands.Number'
-        ];
-    }
-    public static function getAttributes()
-    {
-        return [];
-    }
+
 }
 
 ?>
