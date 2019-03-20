@@ -26,7 +26,7 @@ trait HelperNumberDevice {
         return GetValue($variableID);
     }
 	
-    private static function changeVariable($variableID, $value){
+    private static function updateVariable($variableID, $value){
 		if (!IPS_VariableExists($variableID)){
             return false;
         }
